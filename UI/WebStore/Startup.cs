@@ -19,6 +19,8 @@ using WebStore.Infrastructure.Services.InCookies;
 using WebStore.Infrastructure.Services.InMemory;
 using WebStore.Infrastructure.Services.InSQL;
 
+
+
 namespace WebStore
 {
     public class Startup
@@ -73,6 +75,10 @@ namespace WebStore
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<ICartService, CookiesCartService>();
             services.AddScoped<IOrderService, SqlOrderService>();
+
+            //регистрируем клиента как сервис 
+            services.AddScoped<IValuesServices, ValueClients>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
