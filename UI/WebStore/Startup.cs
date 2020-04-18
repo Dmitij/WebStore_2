@@ -18,8 +18,8 @@ using WebStore.Infrastructure.Services;
 using WebStore.Infrastructure.Services.InCookies;
 using WebStore.Infrastructure.Services.InMemory;
 using WebStore.Infrastructure.Services.InSQL;
-
-
+using WebStore.Interfaces.Api;
+using WebStore.Clients.Values;
 
 namespace WebStore
 {
@@ -77,7 +77,7 @@ namespace WebStore
             services.AddScoped<IOrderService, SqlOrderService>();
 
             //регистрируем клиента как сервис 
-            services.AddScoped<IValuesServices, ValueClients>();
+            services.AddScoped<IValuesService, ValuesClient>();
 
         }
 
