@@ -9,7 +9,7 @@ namespace WebStore.ViewModels
 {
     public class EmployeeViewModel
     {
-        [HiddenInput(DisplayValue = false)]
+        [HiddenInput(DisplayValue = false)]  //чтобы работали атрибуты надо добавить библиатеку Nuget Microsoft.AspNet.Mvc.DataAnnotations
         public int Id { get; set; }
 
         [Display(Name = "Имя")]
