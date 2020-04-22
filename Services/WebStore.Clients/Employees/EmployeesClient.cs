@@ -9,7 +9,7 @@ using WebStore.Models;
 
 namespace WebStore.Clients.Employees
 {
-    class EmployeesClient : BaseClient, IEmployeesData
+    public class EmployeesClient : BaseClient, IEmployeesData
     {        
         public EmployeesClient(IConfiguration Configuration) : base(Configuration, WebApi.Employees) { }
 

@@ -20,6 +20,7 @@ using WebStore.Infrastructure.Services.InMemory;
 using WebStore.Infrastructure.Services.InSQL;
 using WebStore.Interfaces.Api;
 using WebStore.Clients.Values;
+using WebStore.Clients.Employees;
 
 namespace WebStore
 {
@@ -71,7 +72,7 @@ namespace WebStore
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddSingleton<IEmployeesData, InMemoryEmployeesData>();
+            services.AddSingleton<IEmployeesData, EmployeesClient>();
             services.AddScoped<IProductData, SqlProductData>();
             services.AddScoped<ICartService, CookiesCartService>();
             services.AddScoped<IOrderService, SqlOrderService>();
