@@ -10,21 +10,19 @@ using WebStore.Models;
 namespace WebStore.Clients.Employees
 {
     class EmployeesClient : BaseClient, IEmployeesData
-    {
-        public EmployeesClient(IConfiguration Configuration) : base(Configuration, WebApi.Employees) 
-        {
-        }
+    {        
+        public EmployeesClient(IConfiguration Configuration) : base(Configuration, WebApi.Employees) { }
 
-        public void Add(Employee Employee) => throw new NotImplementedException();
+        public IEnumerable<Employee> GetAll() => Get<List<Employee>>(_ServiceAddress);
 
-        public bool Delete(int id) => throw new NotImplementedException();
+        public Employee GetById(int id) => Get<Employee>($"{_ServiceAddress}/{id}");
 
-        public void Edit(int id, Employee Employee) => throw new NotImplementedException();
+        public void Add(Employee Employee) => Post(_ServiceAddress, Employee);
 
-        public IEnumerable<Employee> GetAll() => throw new NotImplementedException();
+        public void Edit(int id, Employee Employee) => Put($"{_ServiceAddress}/{id}", Employee);
 
-        public Employee GetById(int id) => throw new NotImplementedException();
+        public bool Delete(int id) => Delete($"{_ServiceAddress}/{id}").IsSuccessStatusCode;
 
-        public void SaveChanges() => throw new NotImplementedException();
+        public void SaveChanges() { }
     }
 }
