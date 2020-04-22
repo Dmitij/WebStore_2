@@ -17,11 +17,11 @@ namespace WebStore.Infrastructure.Services.InSQL
         public SqlProductData(WebStoreDB db) => _db = db;
 
         public IEnumerable<Section> GetSections() => _db.Sections
-           //.Include(section => section.Products)
+           //.Include(section => section.Products)   //закоентировали чтобы пока избежать цикла при выводе секций
            .AsEnumerable();
 
         public IEnumerable<Brand> GetBrands() => _db.Brands
-           //.Include(brand => brand.Products)
+           //.Include(brand => brand.Products)  //закоентировали чтобы пока избежать цикла при выводе брендов
            .AsEnumerable();
 
         public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
