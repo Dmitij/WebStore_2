@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using WebStore.Domain;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 
 namespace WebStore.ServiceHosting.Controllers
 {
     //[Route("api/[controller]")]
-    [Route("api/employees")]  //жесткий адрес контроллера
+    [Route(WebApi.Employees)]  //жесткий адрес контроллера
 
     [ApiController]
     public class EmployeesApiController : ControllerBase, IEmployeesData
