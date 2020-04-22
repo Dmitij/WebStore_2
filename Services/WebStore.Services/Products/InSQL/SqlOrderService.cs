@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebStore.DAL.Context;
+using WebStore.Domain.DTO.Orders;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.Entities.Orders;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.ViewModels;
 using WebStore.ViewModels.Orders;
 
-namespace WebStore.Infrastructure.Services.InSQL
+namespace WebStore.Services.Products.InSQL
 {
     public class SqlOrderService : IOrderService
     {
@@ -30,11 +31,13 @@ namespace WebStore.Infrastructure.Services.InSQL
            .Where(order => order.User.UserName == UserName)
            .AsEnumerable();
 
+
         public Order GetOrderById(int id) => _db.Orders
            .Include(order => order.OrderItems)
            .FirstOrDefault(order => order.Id == id);
+           
 
-        public async Task<Order> CreateOrderAsync(string UserName, CartViewModel Cart, OrderViewModel OrderModel)
+        public async Task<Order> CreateOrderAsync(string UserName, CreateOrderModel OrderModel)
         {
             var user = await _UserManager.FindByNameAsync(UserName);
 
@@ -42,26 +45,26 @@ namespace WebStore.Infrastructure.Services.InSQL
             {
                 var order = new Order
                 {
-                    Name = OrderModel.Name,
-                    Address = OrderModel.Address,
-                    Phone = OrderModel.Phone,
+                    Name = OrderModel.OrderViewModel.Name,
+                    Address = OrderModel.OrderViewModel.Address,
+                    Phone = OrderModel.OrderViewModel.Phone,
                     User = user,
                     Date = DateTime.Now
                 };
 
                 await _db.Orders.AddAsync(order);
 
-                foreach (var (product_model, quantity) in Cart.Items)
+                foreach (var item in OrderModel.OrderItems)
                 {
-                    var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == product_model.Id);
-                    if(product is null)
-                        throw new InvalidOperationException($"Товар с id:{product_model.Id} в базе данных на найден!");
+                    var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == item.Id);
+                    if (product is null)
+                        throw new InvalidOperationException($"Товар с id:{item.Id} в базе данных на найден!");
 
                     var order_item = new OrderItem
                     {
                         Order = order,
                         Price = product.Price,
-                        Quantity = quantity,
+                        Quantity = item.Quantity,
                         Product = product
                     };
 
