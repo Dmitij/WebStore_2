@@ -53,7 +53,22 @@ namespace WebStoreServiceHosting
 
             
 
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(opt =>
+            {
+                opt.Password.RequiredLength = 3;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireLowercase = true;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredUniqueChars = 3;
+
+                //opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCD...123457890";
+                opt.User.RequireUniqueEmail = false;
+
+                opt.Lockout.AllowedForNewUsers = true;
+                opt.Lockout.MaxFailedAccessAttempts = 10;
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+            })
                 .AddEntityFrameworkStores<WebStoreDB>()
                 .AddDefaultTokenProviders();
         }
