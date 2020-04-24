@@ -23,6 +23,8 @@ using WebStore.Clients.Values;
 using WebStore.Clients.Employees;
 using WebStore.Clients.Products;
 using WebStore.Clients.Orders;
+using WebStore.Interfaces.Services;
+using WebStore.Clients.Identity;
 
 namespace WebStore
 {
@@ -33,14 +35,26 @@ namespace WebStore
         public Startup(IConfiguration Configuration) => this.Configuration = Configuration;
 
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddDbContext<WebStoreDB>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<WebStoreDBInitializer>();
-
+        {       
             services.AddIdentity<User, Role>()
-               .AddEntityFrameworkStores<WebStoreDB>()
+               //.AddEntityFrameworkStores<WebStoreDB>()
                .AddDefaultTokenProviders();
+
+            #region WebAPI Identity clients stores
+
+            services
+               .AddTransient<IUserStore<User>, UsersClient>()
+               .AddTransient<IUserPasswordStore<User>, UsersClient>()
+               .AddTransient<IUserEmailStore<User>, UsersClient>()
+               .AddTransient<IUserPhoneNumberStore<User>, UsersClient>()
+               .AddTransient<IUserTwoFactorStore<User>, UsersClient>()
+               .AddTransient<IUserLockoutStore<User>, UsersClient>()
+               .AddTransient<IUserClaimStore<User>, UsersClient>()
+               .AddTransient<IUserLoginStore<User>, UsersClient>();
+            services
+               .AddTransient<IRoleStore<Role>, RolesClient>();
+
+            #endregion
 
             services.Configure<IdentityOptions>(opt =>
             {
@@ -84,9 +98,8 @@ namespace WebStore
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
-        {
-            db.Initialize();
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {           
 
             if (env.IsDevelopment())
             {
