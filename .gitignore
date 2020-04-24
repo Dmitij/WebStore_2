@@ -344,3 +344,5 @@ healthchecksdb
 /UI/WebStore/wwwroot/js/site.min.js.gz
 /UI/WebStore/wwwroot/js/site.min.js
 /UI/WebStore/wwwroot/js/site.js
+/Common/WebStore.Domain/WebStore.Domain.xml
+/Services/WebStore.ServiceHosting/WebStore.ServiceHosting.xml
