@@ -25,6 +25,8 @@ using WebStore.Clients.Products;
 using WebStore.Clients.Orders;
 using WebStore.Interfaces.Services;
 using WebStore.Clients.Identity;
+using AutoMapper;
+using WebStore.Infrastructure.AutoMapper;
 
 namespace WebStore
 {
@@ -35,7 +37,13 @@ namespace WebStore
         public Startup(IConfiguration Configuration) => this.Configuration = Configuration;
 
         public void ConfigureServices(IServiceCollection services)
-        {       
+        {
+            services.AddAutoMapper(opt =>
+            {
+                opt.AddProfile<DTOMapping>();
+                opt.AddProfile<ViewModelsMapping>();
+            }, typeof(Startup));
+
             services.AddIdentity<User, Role>()
                //.AddEntityFrameworkStores<WebStoreDB>()
                .AddDefaultTokenProviders();

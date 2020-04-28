@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entities.Identity;
@@ -22,15 +23,16 @@ namespace WebStore.Controllers
         public IActionResult Register() => View(new RegisterUserViewModel());
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterUserViewModel Model)
+        public async Task<IActionResult> Register(RegisterUserViewModel Model, [FromServices] IMapper Mapper)
         {
             if (!ModelState.IsValid)
                 return View(Model);
 
-            var user = new User
-            {
-                UserName = Model.UserName
-            };
+            //var user = new User
+            //{
+            //    UserName = Model.UserName
+            //};
+            var user = Mapper.Map<User>(Model);
 
             var register_result = await _UserManager.CreateAsync(user, Model.Password);
             if (register_result.Succeeded)
@@ -57,7 +59,7 @@ namespace WebStore.Controllers
         public async Task<IActionResult> Login(LoginViewModel Model)
         {
             if (!ModelState.IsValid) return View(Model);
-                                          
+
             var login_result = await _SignInManager.PasswordSignInAsync(
                 Model.UserName,
                 Model.Password,
@@ -74,7 +76,7 @@ namespace WebStore.Controllers
             ModelState.AddModelError(string.Empty, "Неверное имя пользователя, или пароль");
 
             return View(Model);
-        } 
+        }
 
         #endregion
 
