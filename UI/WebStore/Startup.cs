@@ -19,6 +19,7 @@ using AutoMapper;
 using WebStore.Infrastructure.AutoMapper;
 using Microsoft.Extensions.Logging;
 using WebStoreLogger;
+using WebStore.Infrastructure.Middleware;
 
 namespace WebStore
 {
@@ -115,6 +116,8 @@ namespace WebStore
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();  //наше промежуточное мидлваре
 
             app.UseEndpoints(endpoints =>
             {
