@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
+using Serilog.Formatting.Json;
+using System;
 
 namespace WebStore
 {
@@ -33,7 +37,7 @@ namespace WebStore
                                  )
                             .WriteTo.RollingFile($@".\Logs\WebStore[{DateTime.Now:yyyy-MM-ddTHH-mm-ss}].log")
                             .WriteTo.File(new JsonFormatter(",", true), $@".\Logs\WebStore[{DateTime.Now:yyyy-MM-ddTHH-mm-ss}].log.json")
-                            .WriteTo.Seq("http://localhost:5341/")
+                            .WriteTo.Seq("http://localhost:5341/") //сервер сбора и анализа структурированных логов
                              );
                  });
     }
