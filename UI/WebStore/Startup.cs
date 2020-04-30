@@ -1,32 +1,24 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebStore.Controllers;
-using WebStore.DAL.Context;
-using WebStore.Data;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.Infrastructure.Services;
 using WebStore.Infrastructure.Services.InCookies;
-using WebStore.Infrastructure.Services.InMemory;
-using WebStore.Infrastructure.Services.InSQL;
 using WebStore.Interfaces.Api;
 using WebStore.Clients.Values;
 using WebStore.Clients.Employees;
 using WebStore.Clients.Products;
 using WebStore.Clients.Orders;
-using WebStore.Interfaces.Services;
 using WebStore.Clients.Identity;
 using AutoMapper;
 using WebStore.Infrastructure.AutoMapper;
+using Microsoft.Extensions.Logging;
+using WebStoreLogger;
 
 namespace WebStore
 {
@@ -106,8 +98,9 @@ namespace WebStore
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {           
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory log)
+        {
+            log.AddLog4Net(); //вот так довавили систему логгирования
 
             if (env.IsDevelopment())
             {
