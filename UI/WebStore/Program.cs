@@ -5,7 +5,7 @@ namespace WebStore
 {
     public class Program
     {
-        public static void Main(string[] args) => 
+        public static void Main(string[] args) =>
             CreateHostBuilder(args)
                .Build()
                .Run();
@@ -14,7 +14,17 @@ namespace WebStore
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(builder =>
                 {
-                    builder.UseStartup<Startup>();
+                    builder.UseStartup<Startup>()
+                       .ConfigureLogging((host, log) =>
+                       {
+                           //log.ClearProviders();
+                           //log.AddConsole(o => o.IncludeScopes = true);
+                           //log.AddDebug()
+                           //log.AddEventLog()
+                           //log.AddFilter("WebStore.Controllers.AccountController", LogLevel.Warning);
+                           //log.AddFilter<ConsoleLoggerProvider>((category, level) => category.StartsWith("WebStore") && level > LogLevel.Warning);
+                       });
+                      
                 });
     }
 }
