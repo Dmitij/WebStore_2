@@ -1,0 +1,4 @@
+INFO  1 2020-04-30 13:38:51,790 [1] ?     - Now listening on: http://localhost:5001
+INFO  1 2020-04-30 13:38:51,803 [1] ?     - Application started. Press Ctrl+C to shut down.
+INFO  1 2020-04-30 13:38:51,805 [1] ?     - Hosting environment: Development
+INFO  1 2020-04-30 13:38:51,806 [1] ?     - Content root path: C:\Users\Димка\Desktop\WebStore_2\Services\WebStore.ServiceHosting

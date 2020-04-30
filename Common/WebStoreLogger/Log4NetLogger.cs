@@ -1,10 +1,8 @@
-﻿using log4net;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reflection;
-using System.Text;
 using System.Xml;
+using log4net;
+using Microsoft.Extensions.Logging;
 
 namespace WebStoreLogger
 {
