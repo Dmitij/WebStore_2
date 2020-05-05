@@ -34,6 +34,7 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpGet("{id}")]
         public Employee GetById(int id) => _EmployeesData.GetById(id);
 
+        [NonAction]
         public void SaveChanges() => _EmployeesData.SaveChanges();
     }
 
